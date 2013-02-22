@@ -1,0 +1,11 @@
+parameters:
+  rhapsody.blog.admin.post.class: Rhapsody\BlogBundle\Admin\PostAdmin
+  rhapsody.blog.entity.post.class: Rhapsody\BlogBundle\Entity\Post
+
+services:
+  rhapsody.blog.admin.post:
+    class: "%rhapsody.blog.admin.post.class%"
+    tags:
+      - { name: "sonata.admin", manager_type: "orm", group: "rhapsody_blog", label: "post" }
+    arguments:
+      [null, "%rhapsody.blog.entity.post.class%", "RhapsodyBlogBundle:PostAdmin"]
