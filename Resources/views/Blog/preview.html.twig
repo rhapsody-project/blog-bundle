@@ -1,0 +1,24 @@
+<div class="post">
+    <div class="row-fluid">
+        <div class="span9" style="font-size: 28px">
+            {# @todo: Post routes #}
+            <a href="{{ path('rhapsody_blog_post', {'slug': post.slug}) }}">{{ post.title }}</a>
+        </div>
+        <div class="span3" style="text-align: right">
+            <i>{{ post.date|date('m/d/Y H:i:s') }}</i>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12" style="margin: 10px 0px 10px 0px">
+            {{ post.text }}
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6">
+        </div>
+        <div class="span6" style="text-align: right">
+            {# trans from "SymfonyCmfSimpleCmsBundle" #}Tagging{# endtrans #}:
+            {# include "SymfonyCmfBlogBundle:Blog:tags_inline.html.twig" #}
+        </div>
+    </div>
+</div>

@@ -27,25 +27,19 @@
  */
 namespace Rhapsody\BlogBundle\Document;
 
-use Rhapsody\BlogBundle\Model\Post as PostModel;
+use Rhapsody\BlogBundle\Model\Comment as CommentModel;
 
 /**
  *
  * @author 	  Sean W. Quinn
  * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Document
+ * @package   Rhapsody\Blogundle\Model
  * @copyright Copyright (c) 2013 Rhapsody Project
  * @license   http://opensource.org/licenses/MIT
  * @version   $Id$
  * @since     1.0
  */
-abstract class Post extends PostModel
+class Comment extends CommentModel
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->tags      = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->comments  = new \Doctrine\Common\Collections\ArrayCollection();
-	}
 }

@@ -37,7 +37,7 @@ namespace Rhapsody\BlogBundle\Model;
  * @version   $Id$
  * @since     1.0
  */
-class Post
+abstract class Post implements PostInterface
 {
 
 	/**
@@ -53,13 +53,13 @@ class Post
 	 * @access protected
 	 */
 	protected $version;
-	
+
 	/**
 	 * The title of this post.
 	 * @var string
 	 * @access protected
 	 */
-    protected $title;
+    protected $title = '';
 
 	/**
 	 * The slug for this post.
@@ -67,7 +67,7 @@ class Post
 	 * @access protected
 	 */
 	protected $slug;
-	
+
 	/**
 	 * The user who authored the post.
 	 * @var mixed
@@ -75,15 +75,23 @@ class Post
 	 */
 	protected $author;
 
+	/**
+	 * The parent post; if null this post represents the first post in a
+	 * possible collection of post revisions.
+	 * @var \Rhapsody\BlogBundle\Model\PostInterface
+	 * @access protected
+	 */
+	protected $parent;
+
     /**
 	 * The date and time that this post was created; if this post is a revision
 	 * to an already existing post, this timestamp represents the date the post
 	 * was last updated.
-     * @var int
+     * @var \DateTime
 	 * @access protected
      */
-    protected $timestamp;
-	
+    protected $date;
+
 	/**
 	 * The status of the post.
 	 * @var string
@@ -92,26 +100,19 @@ class Post
 	protected $status;
 
 	/**
-	 * A summary of the post, in abstract.
-	 * @var string
-	 * @access protected
-	 */
-    protected $abstract;
-	
-	/**
 	 * The content of the post, with markup.
 	 * @var string
 	 * @access protected
 	 */
-    protected $content;
+    protected $text;
 
     /**
 	 * Comments made on this post.
      * @var array
 	 * @access protected
      */
-    protected $comments;
-	
+    protected $comments = array();
+
 	/**
 	 * The revision history of this post.
 	 * @var array
@@ -124,17 +125,149 @@ class Post
      * @var array
 	 * @access protected
      */
-    protected $tags;
+    protected $tags = array();
 
+    /**
+     *
+     */
     public function __toString()
     {
       return $this->getTitle();
     }
 
+    /**
+     *
+     */
     public function __construct()
     {
-        $this->tags     = new \Doctrine\Common\Collections\ArrayCollection;
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection;
-        $this->created_at = new \DateTime("now");;
+        $this->date = new \DateTime("now");
+    }
+
+    public function getAuthor()
+    {
+    	return $this->author;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getComments()
+    {
+    	return $this->comments;
+    }
+
+    public function getParent()
+    {
+    	return $this->parent;
+    }
+
+    public function getText()
+    {
+    	return $this->text;
+    }
+
+    public function getId()
+    {
+    	return $this->id;
+    }
+
+    public function getRevisions()
+    {
+    	return $this->revisions;
+    }
+
+    public function getSlug()
+    {
+    	return $this->slug;
+    }
+
+    public function getStatus()
+    {
+    	return $this->status;
+    }
+
+    public function getTags()
+    {
+    	return $this->tags;
+    }
+
+    public function getDate()
+    {
+    	return $this->date;
+    }
+
+    public function getTitle()
+    {
+    	return $this->title;
+    }
+
+    public function getVersion()
+    {
+    	return $this->version;
+    }
+
+    public function setAuthor($author)
+    {
+    	$this->author = $author;
+    }
+
+    /**
+     *
+     * @var array
+     */
+    public function setComments($comments)
+    {
+    	$this->comments = $comments;
+    }
+
+    public function setContent($content)
+    {
+    	$this->content = $content;
+    }
+
+    public function setId($id)
+    {
+    	$this->id = $id;
+    }
+
+    public function setParent(PostInterface $parent)
+    {
+    	$this->parent = $parent;
+    }
+
+    public function setRevisions($revisions)
+    {
+    	$this->revisions = $revisions;
+    }
+
+    public function setSlug($slug)
+    {
+    	$this->slug = $slug;
+    }
+
+    public function setStatus($status)
+    {
+    	$this->status = $status;
+    }
+
+    public function setTags($tags)
+    {
+    	$this->tags = $tags;
+    }
+
+    public function setDate($date)
+    {
+    	$this->date = $date;
+    }
+
+    public function setTitle($title)
+    {
+    	$this->title = $title;
+    }
+
+    public function setVersion($version)
+    {
+    	$this->version = $version;
     }
 }

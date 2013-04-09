@@ -27,8 +27,6 @@
  */
 namespace Rhapsody\BlogBundle\Model;
 
-use Doctrine\ORM\Mapping as ORM;
-
 /**
  *
  * @author 	  Sean W. Quinn
@@ -64,7 +62,6 @@ class Comment
 	 * @access protected
      */
     protected $url;
-
 
     /**
      * @var string

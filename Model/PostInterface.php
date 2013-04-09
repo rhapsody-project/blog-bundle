@@ -25,27 +25,52 @@
  * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace Rhapsody\BlogBundle\Document;
-
-use Rhapsody\BlogBundle\Model\Post as PostModel;
+namespace Rhapsody\BlogBundle\Model;
 
 /**
  *
  * @author 	  Sean W. Quinn
  * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Document
+ * @package   Rhapsody\Blogundle\Model
  * @copyright Copyright (c) 2013 Rhapsody Project
  * @license   http://opensource.org/licenses/MIT
  * @version   $Id$
  * @since     1.0
  */
-abstract class Post extends PostModel
+interface PostInterface
 {
+	/** The post is a draft. */
+	const POST_STATUS_DRAFT = 'post.status.draft';
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->tags      = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->comments  = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+	/** The post is published. */
+	const POST_STATUS_PUBLISHED = 'post.status.published';
+
+    function getAuthor();
+
+    /**
+     *
+     * @return array
+     */
+    function getComments();
+
+    function getParent();
+
+    function getText();
+
+    function getId();
+
+    function getRevisions();
+
+    function getSlug();
+
+    function getStatus();
+
+	function getTags();
+
+    function getDate();
+
+    function getTitle();
+
+    function getVersion();
+
 }

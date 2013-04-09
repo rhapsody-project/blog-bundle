@@ -27,25 +27,24 @@
  */
 namespace Rhapsody\BlogBundle\Document;
 
-use Rhapsody\BlogBundle\Model\Post as PostModel;
+use Rhapsody\BlogBundle\Model\Tag as TagModel;
 
 /**
  *
  * @author 	  Sean W. Quinn
  * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Document
+ * @package   Rhapsody\Blogundle\Entity
  * @copyright Copyright (c) 2013 Rhapsody Project
  * @license   http://opensource.org/licenses/MIT
  * @version   $Id$
  * @since     1.0
  */
-abstract class Post extends PostModel
+/** @ORM\Entity */
+class Tag extends TagModel
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->tags      = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->comments  = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 }

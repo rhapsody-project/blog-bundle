@@ -25,27 +25,31 @@
  * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace Rhapsody\BlogBundle\Document;
+namespace Rhapsody\BlogBundle\DependencyInjection;
 
-use Rhapsody\BlogBundle\Model\Post as PostModel;
+use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Config\FileLocator;
 
-/**
- *
- * @author 	  Sean W. Quinn
- * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Document
- * @copyright Copyright (c) 2013 Rhapsody Project
- * @license   http://opensource.org/licenses/MIT
- * @version   $Id$
- * @since     1.0
- */
-abstract class Post extends PostModel
+class RhapsodyBlogExtension extends Extension
 {
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $processor = new Processor();
+        $configuration = new Configuration();
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->tags      = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->comments  = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+        $config = $processor->processConfiguration($configuration, $configs);
+    	$loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+    	if ('custom' !== $config['db_driver']) {
+    		$loader->load(sprintf('%s.xml', $config['db_driver']));
+    	}
+
+    	$container->setAlias('rhapsody_blog.post_manager', $config['service']['post_manager']);
+
+    	$container->setParameter('rhapsody_blog.storage', $config['db_driver']);
+    	$container->setParameter('rhapsody_blog.post_class', $config['post_class']);
+    	$container->setParameter('rhapsody_blog.post_manager_name', $config['post_manager_name']);
+    }
 }

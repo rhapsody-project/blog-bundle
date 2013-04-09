@@ -64,15 +64,10 @@ class Tag
      * @var array
 	 * @access protected
      */
-    protected $posts;
+    protected $posts = array();
 
     public function __toString()
     {
       return $this->getName();
-    }
-
-    public function __construct()
-    {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 }

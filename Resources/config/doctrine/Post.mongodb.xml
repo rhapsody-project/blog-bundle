@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mongo-mapping
+  xmlns="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping http://doctrine-project.org/schemas/odm/doctrine-mongo-mapping.xsd">
+
+  <mapped-superclass name="Rhapsody\BlogBundle\Document\Post" collection="rhapsody.blog.post">
+
+    <field name="version" field="version" type="string" />
+    
+    <field name="title" field="title" type="string" />
+    
+    <field name="slug" field="slug" type="string" />
+    
+    <field name="date" field="date" type="date" />
+    
+    <field name="status" field="status" type="string" />
+    
+    <field name="text" field="text" type="bin" />
+    
+    <reference-one field="parent" target-document="Rhapsody\BlogBundle\Document\Post" />
+    
+    <reference-many field="revisions" target-document="Rhapsody\BlogBundle\Document\Post" />
+    
+  </mapped-superclass>
+
+</doctrine-mongo-mapping>

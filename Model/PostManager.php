@@ -25,19 +25,32 @@
  * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace Rhapsody\BlogBundle\Repository;
+namespace Rhapsody\BlogBundle\Model;
 
 /**
  *
- * @author 	  Sean W. Quinn
- * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Repository
- * @copyright Copyright (c) 2013 Rhapsody Project
- * @license   http://opensource.org/licenses/MIT
- * @version   $Id$
- * @since     1.0
+ * @author Sean.Quinn
+ * @since 1.0
  */
-interface PostRepositoryInterface
+abstract class PostManager implements PostManagerInterface
 {
+	/**
+	 * The number of posts to show, if not overridden. This applies to a blog's
+	 * index, digest, and archive pages.
+	 *
+	 * @var int
+	 * @access protected
+	 */
+	protected $limit = 10;
 
+	/**
+	 * The limit to the number of posts to show, if not overridden by optional
+	 * query parameters.
+	 *
+	 * @return number
+	 */
+	public function getLimit()
+	{
+		return $this->limit;
+	}
 }

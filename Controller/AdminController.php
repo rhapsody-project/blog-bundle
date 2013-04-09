@@ -25,27 +25,35 @@
  * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace Rhapsody\BlogBundle\Document;
+namespace Rhapsody\BlogBundle\Controller;
 
-use Rhapsody\BlogBundle\Model\Post as PostModel;
+use Sonata\AdminBundle\Controller\CRUDController;
 
 /**
  *
  * @author 	  Sean W. Quinn
  * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Document
+ * @package   Rhapsody\Blogundle\Controller
  * @copyright Copyright (c) 2013 Rhapsody Project
  * @license   http://opensource.org/licenses/MIT
  * @version   $Id$
  * @since     1.0
  */
-abstract class Post extends PostModel
+class AdminController extends CRUDController
 {
 
-	public function __construct()
+	public function indexAction()
 	{
-		parent::__construct();
-		$this->tags      = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->comments  = new \Doctrine\Common\Collections\ArrayCollection();
+
+	}
+
+	public function editPostAction()
+	{
+
+	}
+
+	public function newPostAction()
+	{
+
 	}
 }

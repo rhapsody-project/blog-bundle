@@ -27,6 +27,10 @@
  */
 namespace Rhapsody\BlogBundle\Repository\ODM;
 
+use Doctrine\ODM\MongoDB\DocumentRepository;
+use Rhapsody\BlogBundle\Model\PostInterface;
+use Rhapsody\BlogBundle\Repository\PostRepositoryInterface;
+
 /**
  *
  * @author 	  Sean W. Quinn
@@ -40,4 +44,124 @@ namespace Rhapsody\BlogBundle\Repository\ODM;
 class PostRepository extends DocumentRepository implements PostRepositoryInterface
 {
 
+	/**
+	 *
+	 * @var array
+	 */
+	protected $defaultOptions = array(
+		'tag' => null,
+		'status' => PostInterface::POST_STATUS_PUBLISHED
+	);
+
+	/**
+	 *
+	 * @return array
+	 */
+	protected function getDateMapReduce()
+	{
+		$mapReduce = array();
+		$mapReduce['map'] = 'function() { emit(this.slug, { "post": this }); }';
+		$mapReduce['reduce'] = 'function(keys, values) {
+			var challenge, latest = null;
+			for (var i in values) {
+				challenge = values[i];
+				if (!latest) {
+					latest = challenge;
+				}
+				else {
+					if (latest.slug !== chalenge.slug) {
+						return null;
+					}
+
+					if (challenge.date > latest.date) {
+						latest = challenge;
+					}
+				}
+			}
+			return latest;
+		}';
+		return $mapReduce;
+	}
+
+	protected function getSearchQuery(array $options = array())
+	{
+		/** @var $qb \Doctrine\MongoDB\Query\Builder */
+		$qb = $this->createQueryBuilder();
+
+		$func = $this->getDateMapReduce();
+		$options = array_merge($this->defaultOptions, $options);
+		if (!empty($options['tag'])) {
+			$qb->field('tags')->in($options['tags']);
+		}
+
+		if (!empty($options['status'])) {
+			$qb->field('status')->equals($options['status']);
+		}
+
+		$qb->mapReduce($func['map'], $func['reduce']);
+		$qb->sort('date', 'desc');
+		return $qb->getQuery();
+	}
+
+	/**
+	 *
+	 * @param array $options
+	 * @return Ambigous <\Doctrine\ODM\MongoDB\Query\mixed, \Doctrine\MongoDB\EagerCursor, object, \Doctrine\MongoDB\Cursor, Cursor, unknown, boolean, multitype:, \Doctrine\MongoDB\ArrayIterator, NULL, number>
+	 */
+	public function search(array $options = array())
+	{
+		$query = $this->getSearchQuery($options);
+		$results = $query->execute();
+
+		$posts = array();
+		foreach ($results as $result) {
+			$data = $result['value']['post'];
+			$posts[] = $this->hydrate($data);
+		}
+		return $posts;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
+	 * Uses MapReduce to find the post entry with the most recent timestamp.
+	 * </p>
+	 *
+	 * @param unknown $slug
+	 * @return object
+	 */
+	public function findOneBySlug($slug, array $optional = array())
+	{
+		$mapReduce = $this->getDateMapReduce();
+
+		$qb = $this->createQueryBuilder();
+
+		$qb->field('slug')->equals($slug);
+		foreach ($optional as $field => $value) {
+			$qb->field($field)->equals($value);
+		}
+		$qb->mapReduce($mapReduce['map'], $mapReduce['reduce']);
+		$qb->sort('date', 'desc');
+		$qb->limit(1);
+
+		$query = $qb->getQuery();
+		$result = $query->getSingleResult();
+		$data = $reduced['value']['post'];
+		return $this->hydrate($data);
+	}
+
+	/**
+	 *
+	 * @param unknown $data
+	 * @return unknown
+	 */
+	private function hydrate($data)
+	{
+		$hydrator = $this->getDocumentManager()->getHydratorFactory();
+		$class = $this->getClassName();
+
+		$post = new $class;
+		$hydrator->hydrate($post, $data);
+		return $post;
+	}
 }

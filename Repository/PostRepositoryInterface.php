@@ -25,27 +25,24 @@
  * OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-namespace Rhapsody\BlogBundle\Document;
-
-use Rhapsody\BlogBundle\Model\Post as PostModel;
+namespace Rhapsody\BlogBundle\Repository;
 
 /**
  *
  * @author 	  Sean W. Quinn
  * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Document
+ * @package   Rhapsody\Blogundle\Repository
  * @copyright Copyright (c) 2013 Rhapsody Project
  * @license   http://opensource.org/licenses/MIT
  * @version   $Id$
  * @since     1.0
  */
-abstract class Post extends PostModel
+interface PostRepositoryInterface
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		$this->tags      = new \Doctrine\Common\Collections\ArrayCollection();
-		$this->comments  = new \Doctrine\Common\Collections\ArrayCollection();
-	}
+	/**
+	 *
+	 * @param unknown $slug
+	 */
+	function findOneBySlug($slug);
 }

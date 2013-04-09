@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="rhapsody_blog_admin_index" pattern="/">
+        <default key="_controller">RhapsodyBlogBundle:Admin:index</default>
+    </route>
+
+    <route id="rhapsody_blog_admin_post_new" pattern="/new-post">
+        <default key="_controller">RhapsodyBlogBundle:Admin:newPost</default>
+    </route>
+    
+    <route id="rhapsody_blog_admin_post_edit" pattern="/edit-post">
+        <default key="_controller">RhapsodyBlogBundle:Admin:editPost</default>
+    </route>
+    
+    <route id="rhapsody_blog_admin_tags_edit" pattern="/edit-tags">
+        <default key="_controller">RhapsodyBlogBundle:Admin:editTags</default>
+    </route>
+
+</routes>

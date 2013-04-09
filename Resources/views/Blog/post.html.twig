@@ -1,0 +1,15 @@
+{% extends 'RhapsodyBlogBundle::layout.html.twig' %}
+
+{% block content %}
+	<div class="post">
+		<div class="the-post">
+			<h1>{{ post.title }}</h1>
+			<div class="post-content">
+				{{ post.text }}
+			</div>
+		</div>
+
+		<div class="post-comments">
+		</div>
+	</div>
+{% endblock %}
