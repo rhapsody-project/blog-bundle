@@ -146,7 +146,7 @@ class PostRepository extends DocumentRepository implements PostRepositoryInterfa
 
 		$query = $qb->getQuery();
 		$result = $query->getSingleResult();
-		$data = $reduced['value']['post'];
+		$data = $result['value']['post'];
 		return $this->hydrate($data);
 	}
 
