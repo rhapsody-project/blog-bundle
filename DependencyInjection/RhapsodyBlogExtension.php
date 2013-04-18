@@ -37,11 +37,12 @@ class RhapsodyBlogExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $processor = new Processor();
-        $configuration = new Configuration();
-
-        $config = $processor->processConfiguration($configuration, $configs);
     	$loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+    	$loader->load('twig.xml');
+
+    	$processor = new Processor();
+    	$configuration = new Configuration();
+    	$config = $processor->processConfiguration($configuration, $configs);
     	if ('custom' !== $config['db_driver']) {
     		$loader->load(sprintf('%s.xml', $config['db_driver']));
     	}

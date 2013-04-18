@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!-- Parameters -->
+    <parameters>
+        <parameter key="rhapsody.blog.twig.extension.rhapsody_blog_extension.class">Rhapsody\BlogBundle\Twig\Extension\RhapsodyBlogExtension</parameter>
+    </parameters>
+    
+    <!-- Services -->
+    <services>
+        <service id="rhapsody.blog.twig.extension.rhapsody_blog_extension" class="%rhapsody.blog.twig.extension.rhapsody_blog_extension.class%" public="false">
+            <tag name="twig.extension"/>
+            <argument type="service" id="rhapsody.commons.twig.twig_template_manager" />
+            <argument type="service" id="rhapsody.commons.markup_processor" />
+        </service>
+        
+        <!-- Templates ===================================================== -->
+
+        <service id="rhapsody.blog.twig.template.comment_template" class="Rhapsody\CommonsBundle\Twig\TwigManagedTemplate">
+            <tag name="rhapsody.commons.twig.template" />
+            <argument>Rhapsody\BlogBundle\Model\CommentInterface</argument>
+            <argument>RhapsodyBlogBundle:Template:comment.html.twig</argument>
+        </service>
+        
+        <service id="rhapsody.blog.twig.template.post_template" class="Rhapsody\CommonsBundle\Twig\TwigManagedTemplate">
+            <tag name="rhapsody.commons.twig.template" />
+            <argument>Rhapsody\BlogBundle\Model\PostInterface</argument>
+            <argument>RhapsodyBlogBundle:Template:post.html.twig</argument>
+        </service>
+        
+        <service id="rhapsody.blog.twig.template.preview_template" class="Rhapsody\CommonsBundle\Twig\TwigManagedTemplate">
+            <tag name="rhapsody.commons.twig.template" />
+            <argument>Rhapsody\BlogBundle\Model\PostPreview</argument>
+            <argument>RhapsodyBlogBundle:Template:preview.html.twig</argument>
+        </service>
+    </services>
+
+</container>

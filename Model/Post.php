@@ -76,6 +76,12 @@ abstract class Post implements PostInterface
 	protected $author;
 
 	/**
+	 * The type of markup used to format the post; by default this is HTML.
+	 * @var unknown
+	 */
+	protected $markup = 'html';
+
+	/**
 	 * The parent post; if null this post represents the first post in a
 	 * possible collection of post revisions.
 	 * @var \Rhapsody\BlogBundle\Model\PostInterface
@@ -157,6 +163,11 @@ abstract class Post implements PostInterface
     	return $this->comments;
     }
 
+    public function getMarkup()
+    {
+    	return $this->markup;
+    }
+
     public function getParent()
     {
     	return $this->parent;
@@ -229,6 +240,15 @@ abstract class Post implements PostInterface
     public function setId($id)
     {
     	$this->id = $id;
+    }
+
+    /**
+     * Sets the markup to be used when rendering this post.
+     * @param string $markup the markup language to use when rendering the post.
+     */
+    public function setMarkup($markup)
+    {
+    	$this->markup = $markup;
     }
 
     public function setParent(PostInterface $parent)

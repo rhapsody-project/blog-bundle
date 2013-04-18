@@ -29,53 +29,39 @@ namespace Rhapsody\BlogBundle\Model;
 
 /**
  *
- * @author 	  Sean W. Quinn
- * @category  Rhapsody BlogBundle
- * @package   Rhapsody\Blogundle\Model
- * @copyright Copyright (c) 2013 Rhapsody Project
- * @license   http://opensource.org/licenses/MIT
- * @version   $Id$
- * @since     1.0
+ * @author Sean.Quinn
+ * @since 1.0
  */
-interface PostInterface
+class PostPreview
 {
-	/** The post is a draft. */
-	const POST_STATUS_DRAFT = 'post.status.draft';
+	private $post;
+	private $previewText;
+	private $readMoreText = 'Read More...';
 
-	/** The post is published. */
-	const POST_STATUS_PUBLISHED = 'post.status.published';
+	public function __construct(PostInterface $post, $previewText = null, $readMoreText = null)
+	{
+		$this->post = $post;
+		if (!empty($previewText)) {
+			$this->previewText = $previewText;
+		}
 
-    function getAuthor();
+		if (!empty($readMoreText)) {
+			$this->readMoreText = $readMoreText;
+		}
+	}
 
-    /**
-     *
-     * @return array
-     */
-    function getComments();
+	public function getPost()
+	{
+		return $this->post;
+	}
 
-    /**
-     * Returns the type of markup used for this post.
-     */
-    function getMarkup();
+	public function getPreviewText()
+	{
+		return $this->previewText;
+	}
 
-    function getParent();
-
-    function getText();
-
-    function getId();
-
-    function getRevisions();
-
-    function getSlug();
-
-    function getStatus();
-
-	function getTags();
-
-    function getDate();
-
-    function getTitle();
-
-    function getVersion();
-
+	public function getReadMoreText()
+	{
+		return $this->readMoreText;
+	}
 }

@@ -2,15 +2,15 @@
     <div class="row-fluid">
         <div class="span9" style="font-size: 28px">
             {# @todo: Post routes #}
-            <a href="{{ path('rhapsody_blog_post', {'slug': post.slug}) }}">{{ post.title }}</a>
+            <a href="{{ path('rhapsody_blog_post', {'slug': _widget.post.slug}) }}">{{ _widget.post.title }}</a>
         </div>
         <div class="span3" style="text-align: right">
-            <i>{{ post.date|date('m/d/Y H:i:s') }}</i>
+            <i>{{ _widget.post.date|date('m/d/Y H:i:s') }}</i>
         </div>
     </div>
     <div class="row-fluid">
         <div class="span12" style="margin: 10px 0px 10px 0px">
-            {{ post.text }}
+            {{ _widget.previewText|markup(_widget.post.markup) }}
         </div>
     </div>
     <div class="row-fluid">

@@ -14,6 +14,8 @@
     
     <field name="date" field="date" type="date" />
     
+    <field name="markup" field="markup" type="string" />
+    
     <field name="status" field="status" type="string" />
     
     <field name="text" field="text" type="bin" />

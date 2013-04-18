@@ -5,7 +5,7 @@
     <div class="span12">
         {% block posts %}
             {% for post in posts %}
-                {% include "RhapsodyBlogBundle:Blog:preview.html.twig" %}
+            	{{ post_preview(post) }}
             {% endfor %}
         {% endblock %}
     </div>
