@@ -4,33 +4,28 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="rhapsody_blog_index" pattern="/">
+    <route id="rhapsody_blog_index" path="/">
         <default key="_controller">RhapsodyBlogBundle:Blog:index</default>
     </route>
 
-    <route id="rhapsody_blog_archive" pattern="/archive">
+    <route id="rhapsody_blog_archive" path="/archive" methods="GET">
         <default key="_controller">RhapsodyBlogBundle:Blog:archive</default>
-        <requirement key="_method">GET</requirement>
     </route>
     
-    <route id="rhapsody_blog_feed" pattern="/feed">
+    <route id="rhapsody_blog_feed" path="/feed" methods="GET">
         <default key="_controller">RhapsodyBlogBundle:Blog:feed</default>
-        <requirement key="_method">GET</requirement>
     </route>
     
-    <route id="rhapsody_blog_post" pattern="/{slug}">
+    <route id="rhapsody_blog_post" path="/{slug}" methods="GET">
         <default key="_controller">RhapsodyBlogBundle:Blog:read</default>
-        <requirement key="_method">GET</requirement>
     </route>
 
-    <route id="rhapsody_blog_post_comment" pattern="/{slug}/comment">
+    <route id="rhapsody_blog_post_comment" path="/{slug}/comment" methods="POST">
         <default key="_controller">RhapsodyBlogBundle:Blog:comment</default>
-        <requirement key="_method">POST</requirement>
     </route>
 
-    <route id="rhapsody_blog_post_comments" pattern="/{slug}/comments">
+    <route id="rhapsody_blog_post_comments" path="/{slug}/comments" methods="GET">
         <default key="_controller">RhapsodyBlogBundle:Blog:comments</default>
-        <requirement key="_method">GET</requirement>
     </route>
 
 </routes>
